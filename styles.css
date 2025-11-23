@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/*grid holding targets, auto size the grid*/
+.target-grid {
+    
+    border: solid 5px black;
+    width: 80%;
+    height: 50vh;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto-fill, auto);
+    min-width: 0;
+    min-height: 0;
+    
+}
+
+.target {
+    background-color: white;
+}
+.target.active {
+    border: solid 2px white;
+    padding: 2em;
+    width:auto;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    font-size: 0;
+    background-color: blueviolet;
+    
+}
