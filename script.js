@@ -28,9 +28,9 @@ startButton.addEventListener('click', () => {
 function generateTargets() {
 
     //reset all code variables and constants.
-    targetNum=200;
+    targetNum=5;
     sqrtTargetNum=parseInt(Math.sqrt(targetNum));
-    targetsMax=200;
+    targetsMax=5;
     colourVars = ['Aqua', 'Blue', 'BlueViolet', 'Brown', 'Chartreuse', 'Black', 'Coral', 'Crimson'];
     hitsCounter = 0;
 
@@ -43,7 +43,7 @@ function generateTargets() {
         
         targetGrid.innerHTML += `<div id="${i}" class="${i} target  ">target${i}</div>`;
     }
-    //set the grid
+    //set the grid rows using the new number of targets.
     setGrid();
     //show one target
     showTarget(1);
@@ -57,9 +57,9 @@ function generateTargets() {
 
 //bind target click
 function bindActiveTarget() {
-     document.querySelectorAll('.target.active').forEach(btn=> {
+     document.querySelectorAll('.active').forEach(btn=> {
         btn.addEventListener('click', () => {
-            console.log('clicked');
+            console.log('clicked' + btn.id);
             //updating number of clicks
             hitsCounter++
             updateHitCounter();
@@ -72,6 +72,12 @@ function bindActiveTarget() {
     });
 }
 
+//show random target function including even listeners
+function displayNextTarget() {
+    showTarget(getRandomInt(targetNum))
+    clearEvents();
+    bindActiveTarget();   
+}
 
 //show target
 
@@ -79,7 +85,7 @@ function showTarget(targetNum) {
     //clear all targets colors
     clearColors();
     //remove all targets class "active"
-    document.querySelectorAll('.target.active').forEach(targ => {
+    document.querySelectorAll('.active').forEach(targ => {
             targ.classList.remove('active');
             console.log('first part of show target')
     });
@@ -91,6 +97,19 @@ function showTarget(targetNum) {
 
 }
 
+//clear old event listeners
+
+function clearEvents() {
+    document.querySelectorAll('.target').forEach(btn=> {
+        btn.removeEventListener('click', () => {
+        });
+    });
+}
+
+//random int generator
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 //setting a targets color randomly
 function setTargetRandomColor(targetNum) {
@@ -108,38 +127,10 @@ function clearColors() {
             console.log('targets cleared')
     });
 }
-    
-//show random target
-function displayNextTarget() {
-    showTarget(getRandomInt(targetNum))
-    bindActiveTarget();   
-}
-
-//random int generator
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-//style injection from java to html - unnecessary?
-/*
-function addStyle(styleString) {
-  const style = document.createElement('style');
-  style.textContent = styleString;
-  document.head.append(style);
-}
-*/
 
 //setting grid rows
 function setGrid() {
-    //setting grid using a css variable, editing root.
-    /*
-    addStyle(`
-        :root {
-            --column-var: ${sqrtTargetNum};
-            }
-        `);
-        */
-       //setting variable by editing innerHTML
+    //setting variable by editing innerHTML
     document.getElementById("target-grid").style["grid-template-columns"] = `repeat(${sqrtTargetNum}, 1fr)`;
     console.log("generated new grid rows:" + sqrtTargetNum);
     }
