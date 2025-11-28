@@ -39,7 +39,7 @@ function generateTargets() {
     //clear the grid
     targetGrid.innerHTML = '';
     //generate the number of targets based on the set ammount
-    for (i=0;i<targetNum;i++) {
+    for (let i=0;i<=targetNum;i++) {
         
         targetGrid.innerHTML += `<div id="${i}" class="${i} target  ">target${i}</div>`;
     }
@@ -79,7 +79,7 @@ function showTarget(targetNum) {
     //clear all targets colors
     clearColors();
     //remove all targets class "active"
-    document.querySelectorAll('.target').forEach(targ => {
+    document.querySelectorAll('.target.active').forEach(targ => {
             targ.classList.remove('active');
             console.log('first part of show target')
     });
