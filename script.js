@@ -5,6 +5,7 @@ let targetsMax=200;
 let colourVars = ['Aqua', 'Blue', 'BlueViolet', 'Brown', 'Chartreuse', 'Black', 'Coral', 'Crimson'];
 let hitsCounter = 0;
 
+
 //Buttons
 const startButton = document.getElementById("start-btn");
 const stopButton = document.getElementById("stop-btn");
@@ -33,7 +34,7 @@ function generateTargets() {
     targetsMax=5;
     colourVars = ['Aqua', 'Blue', 'BlueViolet', 'Brown', 'Chartreuse', 'Black', 'Coral', 'Crimson'];
     hitsCounter = 0;
-
+    
     //get all target grid elements
     const targetGrid = document.getElementById("target-grid");
     //clear the grid
@@ -57,6 +58,7 @@ function generateTargets() {
 
 //bind target click
 function bindActiveTarget() {
+    
      document.querySelectorAll('.active').forEach(btn=> {
         btn.addEventListener('click', () => {
             console.log('clicked' + btn.id);
@@ -67,15 +69,16 @@ function bindActiveTarget() {
             updateTargetVars();
             displayNextTarget();
             setGrid();
-
-        });
+        //specifying that this event listener dissapears after once click. 
+        }, {once: true});
     });
 }
 
 //show random target function including even listeners
 function displayNextTarget() {
+    //getting random number with total targets as a max. 
     showTarget(getRandomInt(targetNum))
-    clearEvents();
+    //bing the active target event listener
     bindActiveTarget();   
 }
 
@@ -87,29 +90,26 @@ function showTarget(targetNum) {
     //remove all targets class "active"
     document.querySelectorAll('.active').forEach(targ => {
             targ.classList.remove('active');
-            console.log('first part of show target')
+            console.log('first part of show target');
     });
     //update 1 target class to active
     document.getElementById(targetNum).classList.add('active');
     //set random color for targetsquare
     setTargetRandomColor(targetNum);
-    console.log('second part of show section')
+    console.log('second part of show section');
 
 }
 
-//clear old event listeners
 
-function clearEvents() {
-    document.querySelectorAll('.target').forEach(btn=> {
-        btn.removeEventListener('click', () => {
-        });
-    });
-}
+
+
 
 //random int generator
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
+
+
 
 //setting a targets color randomly
 function setTargetRandomColor(targetNum) {
@@ -136,10 +136,11 @@ function setGrid() {
     }
 
 
-//update target variables
+//update target variables, 
 
 function updateTargetVars() {
-    targetNum=getRandomInt(targetsMax);
+    //set total targets equal to a random ammount of the max, should be for a mode with randome target ammounts.
+    //targetNum=getRandomInt(targetsMax);
     //trying to get nice balance of total targets to number used for # of columns in the grid.
     sqrtTargetNum=parseInt(Math.sqrt(targetNum)+4);
     console.log(targetNum);
