@@ -3,6 +3,7 @@ let targetNum=200;
 let sqrtTargetNum=parseInt(Math.sqrt(targetNum));
 let targetsMax=200;
 let colourVars = ['Aqua', 'Blue', 'BlueViolet', 'Brown', 'Chartreuse', 'Black', 'Coral', 'Crimson'];
+let hitsCounter = 0;
 
 //Buttons
 const startButton = document.getElementById("start-btn");
@@ -15,6 +16,7 @@ const stopButton = document.getElementById("stop-btn");
 //eventListeners
 
 startButton.addEventListener('click', () => {
+    
     generateTargets();
 });
 
@@ -24,6 +26,14 @@ startButton.addEventListener('click', () => {
 //generate all targets
 
 function generateTargets() {
+
+    //reset all code variables and constants.
+    targetNum=200;
+    sqrtTargetNum=parseInt(Math.sqrt(targetNum));
+    targetsMax=200;
+    colourVars = ['Aqua', 'Blue', 'BlueViolet', 'Brown', 'Chartreuse', 'Black', 'Coral', 'Crimson'];
+    hitsCounter = 0;
+
     //get all target grid elements
     const targetGrid = document.getElementById("target-grid");
     //clear the grid
@@ -38,16 +48,22 @@ function generateTargets() {
     //show one target
     showTarget(1);
     //bind event listeners to each active target.
-    bindTarget();
-
+    bindActiveTarget();
+    //reset the hits counter
+    hitsCounter = 0;
+    updateHitCounter();
 
 }
 
 //bind target click
-function bindTarget() {
+function bindActiveTarget() {
      document.querySelectorAll('.target.active').forEach(btn=> {
         btn.addEventListener('click', () => {
             console.log('clicked');
+            //updating number of clicks
+            hitsCounter++
+            updateHitCounter();
+            //update the next target;
             updateTargetVars();
             displayNextTarget();
             setGrid();
@@ -62,7 +78,7 @@ function bindTarget() {
 function showTarget(targetNum) {
     //clear all targets colors
     clearColors();
-    //clear all targets
+    //remove all targets class "active"
     document.querySelectorAll('.target').forEach(targ => {
             targ.classList.remove('active');
             console.log('first part of show target')
@@ -96,7 +112,7 @@ function clearColors() {
 //show random target
 function displayNextTarget() {
     showTarget(getRandomInt(targetNum))
-    bindTarget();   
+    bindActiveTarget();   
 }
 
 //random int generator
@@ -129,9 +145,6 @@ function setGrid() {
     }
 
 
-
-
-
 //update target variables
 
 function updateTargetVars() {
@@ -140,4 +153,9 @@ function updateTargetVars() {
     sqrtTargetNum=parseInt(Math.sqrt(targetNum)+4);
     console.log(targetNum);
     console.log(sqrtTargetNum);
+}
+
+//update hitcounter element to display the new hit count total
+function updateHitCounter() {
+    document.getElementById("hits-display").innerText = hitsCounter;
 }
