@@ -39,7 +39,10 @@ body {
 }
 
 /*controls*/
-
-.score {
+.controls {
     display: flex;
+}
+.controls div{
+    display: flex;
+    
 }

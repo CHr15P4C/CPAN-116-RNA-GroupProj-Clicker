@@ -21,6 +21,7 @@ const stopButton = document.getElementById("stop-btn");
 startButton.addEventListener('click', () => {
     
     generateTargets();
+    startTime();
 });
 
 
@@ -177,4 +178,18 @@ function updateHitCounter() {
 //update misscounter element
 function updateMissCounter() {
     document.getElementById('miss-display').innerText = missCounter;
+}
+
+//clock function
+
+function startTime() {
+    //get current date time as now
+    const start = new Date()
+    //set interval for date time function to run at 1 second.
+    setInterval(setTime, 10);
+    function setTime() {
+        var currentTime = new Date();
+        var timeDifference = Math.abs(currentTime - start);
+        document.getElementById('timer').innerText = timeDifference;
+    }
 }
